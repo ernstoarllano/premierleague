@@ -1,2 +1,20 @@
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
+<script>
+  import { onMount } from 'svelte'
+  import { getStandings,standings } from '../stores'
+
+  onMount(async () => {
+    await getStandings()
+  })
+</script>
+
+<main>
+  <section>
+    <div>
+      {#each $standings as standing}
+        <div>
+          <h2>{standing.team}</h2>
+        </div>
+      {/each}
+    </div>
+  </section>
+</main>

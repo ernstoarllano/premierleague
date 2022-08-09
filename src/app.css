@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+	body {
+		@apply lg:grid lg:place-content-center lg:h-screen text-white bg-primary bg-gradient-to-r from-primary to-accent;
+	}
+}

@@ -1,48 +1,71 @@
 import { derived, writable } from 'svelte/store'
 
 const headers = {
-	'X-Auth-Token': '116926a1c2c3461a9118dd952fd216b5'
+	'x-rapidapi-host': 'v3.football.api-sports.io',
+	'x-rapidapi-key': '364b958f521c13e1d39153898a940d79'
 }
-const cors = 'https://cors-anywhere.herokuapp.com'
 
 /**
- * Define store for standings
+ * Data definitions
  */
 type Standing = {
-	position: number
-	points: number
-	won: number
-	draw: number
-	lost: number
-	goalDifference: number
-	goalsAgainst: number
-	goalsFor: number
-	playedGames: number
+	rank: number
 	team: {
-		shortName: string
+		id: number
+		name: string
+		logo: string
 	}
+	points: number
+	goalsDiff: number
+	form: string
+	all: {
+		played: number
+		win: number
+		draw: number
+		lose: number
+		goals: {
+			for: number
+			against: number
+		}
+	}
+}
+
+type League = {
+	id: number
+	name: string
+	country: string
+	logo: string
+	flag: string
+	season: number
+	standings: Standing[]
 }
 
 /**
  * Store data for standings
  */
-export const apiData = writable<Standing[] | []>([])
+export const apiData = writable<League | Record<string, never>>({})
 
 /**
  * Fetch standings data from API
  */
 export const getStandings = async () => {
-	const standingsEndpoint = 'https://api.football-data.org/v4/competitions/PL/standings'
+	const league = 39
+	const date = new Date()
+	const year = date.getFullYear()
+	const endpoint = `https://v3.football.api-sports.io/standings?league=${league}&season=${year}`
 
 	try {
-		const getStandings = await fetch(`${cors}/${standingsEndpoint}`, {
-			headers
-		})
+		const getStandings = await fetch(`${endpoint}`, { headers })
 
 		const data = await getStandings.json()
 
-		console.log(data.standings[0].table)
-		apiData.set(data.standings[0].table)
+		if (data.errors) {
+			for (const [key, value] of Object.entries(data.errors)) {
+				throw new Error(`${key}: ${value}`)
+			}
+		}
+
+		apiData.set(data.response[0].league)
 	} catch (err) {
 		console.error(err)
 
@@ -54,21 +77,17 @@ export const getStandings = async () => {
  * Standings transformation
  * We'll create a derived store to hold the data we want to display
  */
-export const standings = derived(apiData, ($apiData) => {
-	if ($apiData.length > 0) {
-		return $apiData.map((standing) => ({
-			position: standing.position,
-			points: standing.points,
-			won: standing.won,
-			draw: standing.draw,
-			lost: standing.lost,
-			goalDifference: standing.goalDifference,
-			goalsAgainst: standing.goalsAgainst,
-			goalsFor: standing.goalsFor,
-			playedGames: standing.playedGames,
-			team: standing.team.shortName
+export const currentStandings = derived(apiData, ($apiData) => {
+	if ($apiData.standings) {
+		return $apiData.standings.map((standing) => ({
+			rank: standing.rank,
+			logo: standing.team.logo,
+			team: standing.team.name,
+			played: standing.all.played,
+			goalsDiff: standing.goalsDiff,
+			points: standing.points
 		}))
 	}
 
-	return []
+	return
 })

@@ -2,8 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+	font-family: 'Premier League Bold';
+	src: url('premier-league-bold.woff2') format('woff2');
+}
+
+@font-face {
+	font-family: 'Premier League Regular';
+	src: url('premier-league-regular.woff2') format('woff2');
+}
+
 @layer base {
 	body {
-		@apply lg:grid lg:place-content-center lg:h-screen text-white bg-primary bg-gradient-to-r from-primary to-accent;
+		@apply font-premier-league-bold bg-primary bg-gradient-to-r from-primary to-accent;
 	}
 }

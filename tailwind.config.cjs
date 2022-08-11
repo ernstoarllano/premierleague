@@ -11,8 +11,13 @@ module.exports = {
         primary: '#2cecfd',
         accent: '#904bfb',
         tertiary: '#ff2882',
+      },
+      bgGradientDeg: {
+        0: '0deg',
       }
     },
   },
-  plugins: [],
+  plugins: [
+    require('tailwindcss-gradient'),
+  ],
 }

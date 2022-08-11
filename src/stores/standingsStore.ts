@@ -23,13 +23,13 @@ type Standing = {
 }
 
 /**
+ * TODO: Persist standings in local storage
  * Return standings data from API
  *
  * @url https://www.api-football.com/documentation-v3#tag/Standings/operation/get-standings
  * @returns {array of objects}
  */
 export const getStandings = () => {
-	const cache = new Map()
 	const store = writable<Standing[] | []>([])
 
 	const league = 39
@@ -38,13 +38,6 @@ export const getStandings = () => {
 	const headers = {
 		'x-rapidapi-host': 'v3.football.api-sports.io',
 		'x-rapidapi-key': '364b958f521c13e1d39153898a940d79'
-	}
-
-	// TODO: Need to check if data is being cached
-	if (cache.has(url)) {
-		console.log(cache.get(url))
-
-		store.set(cache.get(url))
 	}
 
 	const load = async () => {
@@ -57,10 +50,6 @@ export const getStandings = () => {
 			}
 		}
 
-		console.log(data.response[0].league.standings[0])
-
-		// TODO: Need to check if data is being cached
-		cache.set(url, data.response[0].league.standings[0])
 		store.set(data.response[0].league.standings[0])
 	}
 

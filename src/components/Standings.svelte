@@ -1,12 +1,13 @@
 <script>
   import { getStandings } from '../stores/standingsStore'
+  import Loading from './Loading.svelte'
 
   const standings = getStandings()
 </script>
 
 <div class='space-y-6'>
   {#await standings}
-    <p>Loading...</p>
+    <Loading />
   {:then}
     <div class='flex flex-row flex-no-wrap items-center justify-end'>
       <span class='flex flex-row flex-none items-center justify-center'></span>

@@ -1,7 +1,17 @@
 import { env } from '$lib/env'
 import { writable } from 'svelte/store'
 
-export const team = writable([])
+type Team = {
+	code: string
+	country: string
+	founded: number
+	id: number
+	logo: string
+	name: string
+	national: boolean
+}
+
+export const team = writable<Team | Record<string, never>>({})
 export const isLoading = writable<boolean | false>(false)
 
 /**
@@ -31,7 +41,7 @@ export const fetchTeam = async (name: string) => {
 			}
 		}
 
-		team.set(data.response)
+		team.set(data.response[0].team)
 		isLoading.set(false)
 
 		return team

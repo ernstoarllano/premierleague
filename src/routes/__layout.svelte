@@ -18,12 +18,12 @@
 
   @font-face {
 	  font-family: 'Premier League Bold';
-	  src: url('/static/premier-league-bold.woff2') format('woff2');
+	  src: url('/premier-league-bold.woff2') format('woff2');
   }
 
   @font-face {
     font-family: 'Premier League Regular';
-    src: url('/static/premier-league-regular.woff2') format('woff2');
+    src: url('/premier-league-regular.woff2') format('woff2');
   }
 
   @layer base {

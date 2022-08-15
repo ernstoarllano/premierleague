@@ -1,12 +1,5 @@
 <svelte:head>
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-KLPZC7W41M"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-
-    gtag('config', 'G-KLPZC7W41M');
-  </script>
+  <script defer data-domain="premierleague.vercel.app" src="https://plausible.io/js/plausible.js"></script>
 </svelte:head>
 
 <slot />

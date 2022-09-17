@@ -9,8 +9,9 @@ module.exports = {
       },
       colors: {
         primary: '#2cecfd',
-        accent: '#904bfb',
+        secondary: '#37003c',
         tertiary: '#ff2882',
+        accent: '#904bfb',
       },
       bgGradientDeg: {
         0: '0deg',

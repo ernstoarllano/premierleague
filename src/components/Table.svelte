@@ -7,7 +7,7 @@
 
   @layer base {
     .table {
-      @apply relative w-full max-w-4xl mx-auto py-8 pl-12 pr-8 bg-white shadow-2xl;
+      @apply relative w-full max-w-4xl mx-auto my-12 py-8 pl-12 pr-8 bg-white shadow-2xl;
     }
 
     .table::before {
